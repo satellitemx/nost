@@ -11,13 +11,14 @@ This notepad uses Netlify to serve the frontend and has data persisted at Fireba
 ## Live Demo
 
 [https://notes.sate.li](https://notes.sate.li)
+
 [Netlify Backup](https://sateli-notes.netlify.app)
 
 No trash data. Thanks. 
 
 ## To do
 
-[ ] Multi-user real-time edit
+- [ ] Multi-user real-time edit
 
 ## Built with
 
