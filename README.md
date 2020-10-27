@@ -1,4 +1,4 @@
-# Nost - a web notepad similar to note.ms
+# Nost - an online notepad
 
 This notepad uses Netlify to serve the frontend and has data persisted at Firebase. 
 
