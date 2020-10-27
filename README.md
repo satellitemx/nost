@@ -10,7 +10,7 @@ This notepad uses Netlify to serve the frontend and has data persisted at Fireba
 
 ## Live Demo
 
-[https://notes.sate.li](https://notes.sate.li)
+[https://nost.app](https://nost.app/)
 
 [Netlify Backup](https://sateli-notes.netlify.app)
 
