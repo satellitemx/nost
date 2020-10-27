@@ -86,7 +86,7 @@ const sanitise = note => {
 const App = () => {
     if (window.location.host === "notes.sate.li") {
         // Redirect to new domain
-        window.location = `https://nost.app${window.location.pathname}`
+        window.location.href = `https://nost.app${window.location.pathname}`
     }
     let note = window.location.pathname
     if (note.length === 1) {
