@@ -1,4 +1,4 @@
-# Nost, a web notepad similar to note.ms
+# Nost - a web notepad similar to note.ms
 
 This notepad uses Netlify to serve the frontend and has data persisted at Firebase. 
 
@@ -10,9 +10,14 @@ This notepad uses Netlify to serve the frontend and has data persisted at Fireba
 
 ## Live Demo
 
-[https://notes.sate.li](https://notes.sate.li). [Netlify Backup](https://sateli-notes.netlify.app)
+[https://notes.sate.li](https://notes.sate.li)
+[Netlify Backup](https://sateli-notes.netlify.app)
 
 No trash data. Thanks. 
+
+## To do
+
+[ ] Multi-user real-time edit
 
 ## Built with
 
