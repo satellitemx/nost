@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: serif;
+    background: #fff;
+    background-image: url(assets/texture.png)
+}
+
+.toolbar {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    /* transform: translateY(-50px); */
+}
+
+.toolset {
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: calc(100% - 10px);
+    max-width: 640px;
+    height: 50px;
+}
+
+.editor {
+    font-family: inherit;
+    border: none;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    padding: 70px 20px 20px;
+    color: #333;
+    text-shadow: 0px 1px 0px #fff;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: calc(100% - 50px);
+    max-width: 700px;
+    height: calc(100vh - 111px);
+    outline: none;
+    font-size: 13pt;
+    line-height: 24px;
+    resize: none;
+}
+
+.status {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    display: block;
+    line-height: 50px;
+    text-align: center;
+    user-select: none;
+    color: #5c5c5c;
+    text-shadow: 0px 1px 0px #fff;
+    transition: 80ms ease;
+}
+    .status:active {
+        transform: scale(0.95);
+    }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #2d3032;
+    }
+    .toolbar {
+        background: rgb(46, 48, 50, 0.9);
+        border-bottom: 1px solid  #545657;
+    }
+    .toolset p {
+        color: #c2c3c5;
+        text-shadow: none;
+    }
+    .editor {
+        background: none;
+        border: 1px solid #545657;
+        border-top: none;
+        color: #e2e3e5;
+        text-shadow: none;
+    }
+}
