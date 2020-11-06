@@ -102,12 +102,13 @@ const App = () => {
 
     return (
 
-        <div>
+        <>
             <Toolbar note={note} status={status} />
             <Suspense fallback={<textarea className="editor"></textarea>}>
                 <Editor note={note} setStatus={handleStatus} />
             </Suspense>
-        </div>
+            <p className="footnote"><a href="https://github.com/satellitemx/nost" target="_blank">Built with ❤️</a></p>
+        </>
 
     )
 }
