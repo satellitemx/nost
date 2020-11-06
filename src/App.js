@@ -20,23 +20,21 @@ const Toolset = ({ note, status }) => {
         switch (status) {
             case 0: setStatus(`Requesting /${note}...`); break
             case 1: setStatus(`Edited`); break
-            case 2: setStatus(`Saving /${note}...`); break
+            case 2: setStatus(`Saving...`); break
             case 3: setStatus(`Failed when saving /${note}`); break
-            default: setStatus(`Saved at /${note}`)
+            default: setStatus(`Saved`)
         }
     }, [note, status])
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(window.location.href)
-        const curStatus = currentStatus
-        setStatus(`Link copied!`)
-        setTimeout(() => { setStatus(curStatus) }, 2000)
     }
 
     return (
-        <div className="toolset">
-            <p onClick={copyToClipboard} className="status">{currentStatus}</p>
-        </div>
+        <div onClick={copyToClipboard} className={[0, 1, 2, 3].indexOf(status) !== -1 ? "toolset show-status" : "toolset"}>
+            <div className="logo"></div>
+            <p className="status">{currentStatus}</p>
+        </div >
     )
 }
 
@@ -71,7 +69,7 @@ const Editor = ({ note, setStatus }) => {
                 () => { setStatus(3) }
             )
             clearTimeout(prev)
-        }, 2000))
+        }, 1000))
     }
 
     return (

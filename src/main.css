@@ -28,8 +28,32 @@ body {
     display: block;
     margin: 0 auto;
     width: calc(100% - 10px);
-    max-width: 640px;
+    max-width: 740px;
     height: 50px;
+}
+    .toolset:active {
+        transform: scale(0.98);
+    }
+    .toolset.show-status .logo {
+        margin-top: 5px;
+        transform: scale(0.95);
+    }
+    .toolset.show-status .status {
+        margin-top: -5px;
+        opacity: 1;
+    }
+
+.logo {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    height: 30px;
+    width: 100%;
+    background-image: url(./assets/logo-light@2x.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    transition: 200ms ease;
 }
 
 .editor {
@@ -57,16 +81,17 @@ body {
 .status {
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     display: block;
-    line-height: 50px;
+    line-height: 15px;
+    height: 15px;
+    font-size: 10pt;
+    margin-top: -20px;
+    opacity: 0;
     text-align: center;
     user-select: none;
     color: #5c5c5c;
     text-shadow: 0px 1px 0px #fff;
-    transition: 80ms ease;
+    transition: 200ms ease;
 }
-    .status:active {
-        transform: scale(0.95);
-    }
 
 @media (prefers-color-scheme: dark) {
     body {
@@ -79,6 +104,9 @@ body {
     .toolset p {
         color: #c2c3c5;
         text-shadow: none;
+    }
+    .logo {
+        background-image: url(./assets/logo-dark@2x.png);
     }
     .editor {
         background: none;
