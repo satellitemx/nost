@@ -10,9 +10,9 @@ This notepad uses Netlify to serve the frontend and has data persisted at Fireba
 
 ## Live Demo
 
-[https://nost.app](https://nost.app/)
+[https://nost.app](https://nost.app/welcome)
 
-[Netlify Backup](https://sateli-notes.netlify.app)
+[Netlify Backup](https://sateli-notes.netlify.app/welcome)
 
 No trash data. Thanks. 
 
