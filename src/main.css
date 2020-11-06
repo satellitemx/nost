@@ -10,6 +10,7 @@ body {
 }
 
 a {
+    line-height: inherit;
     color: inherit;
     text-decoration: none;
 }

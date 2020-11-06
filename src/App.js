@@ -105,6 +105,14 @@ const App = () => {
         setStatus(status)
     }
 
+    const displayGithubLink = e => {
+        e.target.innerText = "Have a look at the source code 🐙"
+    }
+
+    const restoreFootnote = e => {
+        e.target.innerText = "Built with ❤️"
+    }
+
     return (
 
         <>
@@ -112,7 +120,7 @@ const App = () => {
             <Suspense fallback={<textarea className="editor"></textarea>}>
                 <Editor note={note} changeStatus={changeStatus} />
             </Suspense>
-            <p className="footnote"><a href="https://github.com/satellitemx/nost" target="_blank" rel="noreferrer">Built with ❤️</a></p>
+            <p className="footnote"><a href="https://github.com/satellitemx/nost" target="_blank" rel="noreferrer" onMouseOver={displayGithubLink} onMouseOut={restoreFootnote}>Built with ❤️</a></p>
         </>
 
     )
