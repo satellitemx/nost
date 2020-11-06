@@ -13,40 +13,39 @@ const genId = () => {
     return id.join("")
 }
 
-const Toolset = ({ note, status }) => {
-    const [currentStatus, setStatus] = useState("")
+const Toolbar = ({ note, status, changeStatus }) => {
+    const [currentStatusText, setStatusText] = useState("")
 
     useEffect(() => {
         switch (status) {
-            case 0: setStatus(`Requesting /${note}...`); break
-            case 1: setStatus(`Edited`); break
-            case 2: setStatus(`Saving...`); break
-            case 3: setStatus(`Failed when saving /${note}`); break
-            default: setStatus(`Saved`)
+            case 0: setStatusText(`Requesting /${note}...`); break
+            case 1: setStatusText(`Edited`); break
+            case 2: setStatusText(`Saving...`); break
+            case 3: setStatusText(`Failed when saving /${note}`); break
+            case 4: setStatusText(`Link copied`); break
+            default: setStatusText(`Saved`)
         }
     }, [note, status])
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(window.location.href)
+        changeStatus(4)
+        setTimeout(() => {
+            changeStatus(-1)
+        }, 3000)
     }
 
     return (
-        <div onClick={copyToClipboard} className={[0, 1, 2, 3].indexOf(status) !== -1 ? "toolset show-status" : "toolset"}>
-            <div className="logo"></div>
-            <p className="status">{currentStatus}</p>
-        </div >
-    )
-}
-
-const Toolbar = ({ note, status }) => {
-    return (
         <div className="toolbar">
-            <Toolset note={note} status={status} />
+            <div onClick={copyToClipboard} className={[0, 1, 2, 3, 4].indexOf(status) !== -1 ? "toolset show-status" : "toolset"}>
+                <div className="logo"></div>
+                <p className="status">{currentStatusText}</p>
+            </div >
         </div>
     )
 }
 
-const Editor = ({ note, setStatus }) => {
+const Editor = ({ note, changeStatus }) => {
     const col = useFirestore().collection("notes")
     let docRef = col.doc(note)
     let { data } = useFirestoreDocData(docRef)
@@ -54,19 +53,19 @@ const Editor = ({ note, setStatus }) => {
     const [prev, setPrev] = useState(null)
 
     useEffect(() => {
-        setStatus(-1)
+        changeStatus(-1)
     }, [])
 
     const handleChange = (e) => {
         setPresentData(e.target.value)
-        setStatus(1)
+        changeStatus(1)
         if (prev) clearInterval(prev)
         setPrev(setTimeout(() => {
-            setStatus(2)
+            changeStatus(2)
             col.doc(note).set({ data: e.target.value }).then(
-                () => { setStatus(-1) }
+                () => { changeStatus(-1) }
             ).catch(
-                () => { setStatus(3) }
+                () => { changeStatus(3) }
             )
             clearTimeout(prev)
         }, 1000))
@@ -94,20 +93,26 @@ const App = () => {
     window.history.pushState(note, `Nost - ${note}`, `/${note}`)
     document.title = `Nost - ${note}`
 
-    const [status, setStatus] = useState(0) // 0: requesting; 1: waiting for save; 2: saving; 3: error on save; default: viewing
+    const [status, setStatus] = useState(0)
+    // 0: requesting
+    // 1: waiting for save
+    // 2: saving
+    // 3: error on save
+    // 4: copied
+    // -1: viewing
 
-    const handleStatus = status => {
+    const changeStatus = status => {
         setStatus(status)
     }
 
     return (
 
         <>
-            <Toolbar note={note} status={status} />
+            <Toolbar note={note} status={status} changeStatus={changeStatus} />
             <Suspense fallback={<textarea className="editor"></textarea>}>
-                <Editor note={note} setStatus={handleStatus} />
+                <Editor note={note} changeStatus={changeStatus} />
             </Suspense>
-            <p className="footnote"><a href="https://github.com/satellitemx/nost" target="_blank">Built with ❤️</a></p>
+            <p className="footnote"><a href="https://github.com/satellitemx/nost" target="_blank" rel="noreferrer">Built with ❤️</a></p>
         </>
 
     )
