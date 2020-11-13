@@ -62,7 +62,10 @@ const Editor = ({ note, changeStatus }) => {
         if (prev) clearInterval(prev)
         setPrev(setTimeout(() => {
             changeStatus(2)
-            col.doc(note).set({ data: e.target.value }).then(
+            col.doc(note).set({
+                data: e.target.value,
+                lastUpdate: new Date()
+            }).then(
                 () => { changeStatus(-1) }
             ).catch(
                 () => { changeStatus(3) }
