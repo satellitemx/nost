@@ -79,6 +79,17 @@ const Editor = ({ note, changeStatus }) => {
     )
 }
 
+const Footnote = () => {
+    return (
+        <div className="footnote">
+            <a href="https://github.com/satellitemx/nost" target="_blank" rel="noreferrer">
+                <p className="footnote-show">Built with ❤️</p>
+                <p className="footnote-hidden">Have a look at the source code 🐙</p>
+            </a>
+        </div>
+    )
+}
+
 const sanitise = note => {
     return note.split("").filter(char => "qwertyuiopasdfghjklzxcvbnm".indexOf(char) !== -1).join("")
 }
@@ -108,14 +119,6 @@ const App = () => {
         setStatus(status)
     }
 
-    const displayGithubLink = e => {
-        e.target.innerText = "Have a look at the source code 🐙"
-    }
-
-    const restoreFootnote = e => {
-        e.target.innerText = "Built with ❤️"
-    }
-
     return (
 
         <>
@@ -123,7 +126,7 @@ const App = () => {
             <Suspense fallback={<textarea className="editor"></textarea>}>
                 <Editor note={note} changeStatus={changeStatus} />
             </Suspense>
-            <p className="footnote"><a href="https://github.com/satellitemx/nost" target="_blank" rel="noreferrer" onMouseOver={displayGithubLink} onMouseOut={restoreFootnote}>Built with ❤️</a></p>
+            <Footnote />
         </>
 
     )

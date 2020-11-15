@@ -4,7 +4,7 @@
 }
 
 body {
-    font-family: serif;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     background: #fff;
     background-image: url(assets/texture.png)
 }
@@ -63,7 +63,6 @@ a {
 }
 
 .status {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     display: block;
     line-height: 15px;
     height: 15px;
@@ -79,7 +78,7 @@ a {
 }
 
 .editor {
-    font-family: inherit;
+    font-family: ui-serif, serif;
     border: none;
     position: relative;
     display: block;
@@ -102,12 +101,38 @@ a {
 
 .footnote {
     display: block;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 9pt;
-    color: #5c5c5c;
-    line-height: 26px;
+    height: 26px;
+    overflow: hidden;
 }
+    .footnote a {
+        display: block;
+    }
+    .footnote a p {
+        display: block;
+        position: relative;
+        text-align: center;
+        font-size: 9pt;
+        color: #5c5c5c;
+        line-height: 26px;
+        transition: 200ms ease;
+    }
+    .footnote a .footnote-show {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+    }
+    .footnote a .footnote-hidden {
+        margin-top: -26px;
+        transform: translateY(2px) scale(0.9);
+        opacity: 0;
+    }
+    .footnote:hover a .footnote-show {
+        transform: translateY(-2px) scale(0.9);
+        opacity: 0;
+    }
+    .footnote:hover a .footnote-hidden {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+    }
 
 @media (prefers-color-scheme: dark) {
     body {
