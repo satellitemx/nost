@@ -28,7 +28,13 @@ const Toolbar = ({ note, status, changeStatus }) => {
     }, [note, status])
 
     const copyToClipboard = () => {
-        navigator.clipboard.writeText(window.location.href)
+        if (window.location.pathname.indexOf("view") !== -1) {
+            console.log("Copying raw!")
+            navigator.clipboard.writeText(window.location.href)
+        } else {
+            console.log("Copying encoded!")
+            navigator.clipboard.writeText(`${window.location.origin}/view/${B64(window.location.pathname, "ENCODE")}`)
+        }
         changeStatus(4)
         setTimeout(() => {
             changeStatus(-1)
@@ -45,7 +51,7 @@ const Toolbar = ({ note, status, changeStatus }) => {
     )
 }
 
-const Editor = ({ note, changeStatus }) => {
+const Editor = ({ note, changeStatus, viewOnly }) => {
     const col = useFirestore().collection("notes")
     let docRef = col.doc(note)
     let { data } = useFirestoreDocData(docRef)
@@ -75,7 +81,7 @@ const Editor = ({ note, changeStatus }) => {
     }
 
     return (
-        <textarea className="editor" onChange={handleChange} value={presentData}></textarea>
+        <textarea className="editor" onChange={handleChange} value={presentData} disabled={viewOnly}></textarea>
     )
 }
 
@@ -94,19 +100,19 @@ const sanitise = note => {
     return note.split("").filter(char => "qwertyuiopasdfghjklzxcvbnm".indexOf(char) !== -1).join("")
 }
 
-const App = () => {
-    if (window.location.host === "notes.sate.li") {
-        // Redirect to new domain
-        window.location.href = `https://nost.app${window.location.pathname}`
+const B64 = (input, mode) => {
+    switch (mode) {
+        case "DECODE": {
+            return Buffer.from(input, "base64").toString("ascii")
+        }
+        case "ENCODE": {
+            return Buffer.from(input).toString("base64")
+        }
+        default: return ""
     }
-    let note = window.location.pathname
-    if (note.length === 1) {
-        note = genId()
-    }
-    note = sanitise(note)
-    window.history.pushState(note, `Nost - ${note}`, `/${note}`)
-    document.title = `Nost - ${note}`
+}
 
+const App = () => {
     const [status, setStatus] = useState(0)
     // 0: requesting
     // 1: waiting for save
@@ -114,6 +120,28 @@ const App = () => {
     // 3: error on save
     // 4: copied
     // -1: viewing
+
+    if (window.location.host === "notes.sate.li") {
+        // Redirect to new domain
+        window.location.href = `https://nost.app${window.location.pathname}`
+    }
+    let note = window.location.pathname
+    let viewPath = note
+    let viewOnly
+    if (note.indexOf("view") !== -1) {
+        viewOnly = true
+        note = sanitise(B64(note.split("/")[2], "DECODE"))
+        viewPath = viewPath.substring(1)
+    } else {
+        if (note.length === 1) {
+            note = genId()
+        }
+        note = sanitise(note)
+        viewPath = note
+        window.history.pushState({ page: 1 }, `Nost - ${viewPath}`, `${window.location.origin}/${viewPath}`)
+    }
+    // console.log(note, viewPath)
+    document.title = `Nost - ${viewPath}`
 
     const changeStatus = status => {
         setStatus(status)
@@ -124,7 +152,7 @@ const App = () => {
         <>
             <Toolbar note={note} status={status} changeStatus={changeStatus} />
             <Suspense fallback={<textarea className="editor"></textarea>}>
-                <Editor note={note} changeStatus={changeStatus} />
+                <Editor note={note} changeStatus={changeStatus} viewOnly={viewOnly} />
             </Suspense>
             <Footnote />
         </>
