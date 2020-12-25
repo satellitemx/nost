@@ -130,3 +130,4 @@ yarn-error.log*
 FBConfig.js
 # Local Netlify folder
 .netlify
+package-lock.json
