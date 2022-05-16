@@ -1,0 +1,33 @@
+.strip {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.1rem;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.button {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #555;
+  user-select: none;
+
+  transition: 200ms ease;
+}
+
+.button:hover {
+  border-radius: 3px;
+  background: #EEE;
+  color: #222;
+}
+
+.button:active {
+  background: #DDD;
+}

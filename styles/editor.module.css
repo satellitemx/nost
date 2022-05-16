@@ -1,0 +1,7 @@
+.editor {
+  display: block;
+  max-width: 600px;
+  width: calc(100% - 2rem);
+  min-height: 300px;
+  margin: 1rem auto;
+}
