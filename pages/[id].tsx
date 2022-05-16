@@ -34,9 +34,10 @@ const NotePage: NextPage<NoteProps> = ({ noteId, ops }) => {
       }
       footer {
         display: grid;
-        position: sticky;
+        position: absolute;
         bottom: 0;
         left: 0;
+        width: 100%;
         justify-items: center;
         align-items: center;
         padding: 0.5rem;

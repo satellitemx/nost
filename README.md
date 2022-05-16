@@ -20,5 +20,6 @@ No trash data. Thanks.
 ## Built with
 
 [`React`](https://reactjs.org/)
+[`Quill`](https://quilljs.com/)
 [`Next.js by Vercel`](https://nextjs.org/)
 [`Supabase`](https://supabase.com/)
