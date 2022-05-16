@@ -16,8 +16,10 @@ const Editor: FC<{
   const { write } = useNote(noteId);
   const editorRef = useRef<HTMLDivElement>(null);
   const instance = useRef<Quill | undefined>();
+  const [initialised, setInitialised] = useState(false);
   const [changes, setChanges] = useState<Delta>(new Delta());
   const debounced = useDebounce(changes, 1000);
+  const [lastSavedId, setLastSavedId] = useState<string>();
   const initialContent = useMemo(() => {
     const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
     return converter.convert();
@@ -38,6 +40,7 @@ const Editor: FC<{
         },
       });
       instance.current = quill;
+      setInitialised(true);
 
       const handler: TextChangeHandler = (delta, oldDelta, source) => {
         if (source === "user") {
@@ -51,6 +54,24 @@ const Editor: FC<{
     }
   }, [editorRef, write]);
 
+  // setup live subscription
+  useEffect(() => {
+    if (!initialised) { return; }
+    const quill = instance.current!;
+    const noteChnages = supabase
+      .from<definitions["note_changes"]>(`note_changes:note_id=eq.${noteId}`)
+      .on("INSERT", payload => {
+        const { new: content } = payload;
+        if (content.id !== lastSavedId) {
+          quill.updateContents(content.delta as any, "api");
+        }
+      }).subscribe();
+
+    return () => {
+      noteChnages.unsubscribe();
+    };
+  }, [initialised, lastSavedId, noteId]);
+
   useEffect(() => {
     if (debounced.ops.length === 0) { return; }
     const abortController = new AbortController();
@@ -60,7 +81,9 @@ const Editor: FC<{
         { delta: JSON.stringify(debounced), note_id: noteId },
       ])
       .abortSignal(abortController.signal)
-      .then(() => {
+      .then(({ data }) => {
+        const row = data?.pop();
+        setLastSavedId(row?.id);
         setChanges(new Delta());
       });
   }, [debounced, noteId]);

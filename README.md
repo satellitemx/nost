@@ -15,7 +15,7 @@ No trash data. Thanks.
 
 ## To do
 
-- [ ] Multi-user real-time edit
+- [x] Multi-user real-time edit
 
 ## Built with
 
