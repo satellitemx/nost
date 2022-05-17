@@ -1,7 +1,7 @@
 import Delta from "quill-delta";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { useParams } from "solid-app-router";
-import { Component, createMemo, createResource, lazy, Show, Suspense } from "solid-js";
+import { createMemo, createResource, lazy, Show, Suspense } from "solid-js";
 import Head from "src/components/head";
 import ShareStrip from "src/components/share-strip";
 import { supabase } from "src/lib/supabase";
@@ -38,7 +38,7 @@ const fetchNote = async (noteId: string) => {
   };
 };
 
-const NotePage: Component = () => {
+const NotePage = () => {
   const { noteId } = useParams();
   const [data] = createResource(noteId, fetchNote);
   const prerendered = createMemo(() => {

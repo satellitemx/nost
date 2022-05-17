@@ -1,7 +1,7 @@
 import Delta from "quill-delta";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { useParams } from "solid-app-router";
-import { Component, createMemo, createResource, lazy, Show, Suspense } from "solid-js";
+import { createMemo, createResource, lazy, Show, Suspense } from "solid-js";
 import Head from "src/components/head";
 import hashid from "src/lib/hashid";
 import { supabase } from "src/lib/supabase";
@@ -32,9 +32,9 @@ const fetchNote = async (noteIdHashed: string) => {
   };
 };
 
-const NoteViewPage: Component = () => {
-  const { noteId } = useParams();
-  const [data] = createResource(noteId, fetchNote);
+const NoteViewPage = () => {
+  const { hashed } = useParams();
+  const [data] = createResource(hashed, fetchNote);
   const prerendered = createMemo(() => {
     const delta = data()?.delta;
     if (!delta) { return ""; }
@@ -49,7 +49,7 @@ const NoteViewPage: Component = () => {
     <div class={styles.container}>
       <Show when={!data.loading} fallback={"Loading data..."}>
         <Suspense fallback={"Loading editor..."}>
-          <Editor noteId={noteId} disabled={true} prerendered={prerendered()} />
+          <Editor noteId={hashed} disabled={true} prerendered={prerendered()} />
         </Suspense>
       </Show>
     </div>
