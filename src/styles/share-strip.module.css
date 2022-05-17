@@ -35,6 +35,11 @@
   transition: 200ms ease;
 }
 
+.button[disabled] {
+  color: #777;
+  cursor: not-allowed;
+}
+
 .button:hover {
   border-radius: 3px;
   background: #EEE;
