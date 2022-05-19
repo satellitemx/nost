@@ -3,6 +3,7 @@ import Quill, { TextChangeHandler } from "quill";
 import Delta from "quill-delta";
 import { Component, createEffect, onCleanup, onMount } from "solid-js";
 import { supabase } from "src/lib/supabase";
+import { useToast } from "src/lib/use-toast";
 import styles from "src/styles/editor.module.css";
 
 const Editor: Component<{
@@ -10,6 +11,8 @@ const Editor: Component<{
   prerendered: string;
   disabled: boolean;
 }> = (props) => {
+
+  const { toast } = useToast();
 
   let delta = new Delta();
   let lastAcknowledgedId = "";
@@ -25,6 +28,7 @@ const Editor: Component<{
       .then(({ data }) => {
         const row = data?.pop();
         lastAcknowledgedId = row?.id ?? "";
+        toast("Changes saved.");
       });
   };
 

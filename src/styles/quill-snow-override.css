@@ -7,6 +7,12 @@
   background: #FFF;
 }
 
+.ql-container.ql-disabled {
+  box-shadow: none;
+  background: none;
+  border-radius: none;
+}
+
 .ql-container .ql-editor {
   min-height: 300px;
 }
