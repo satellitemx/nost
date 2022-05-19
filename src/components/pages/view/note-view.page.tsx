@@ -28,6 +28,7 @@ const fetchNote = async (noteIdHashed: string) => {
 
   return {
     id: row?.id,
+    noteId: row?.note_id,
     delta: composed ?? new Delta()
   };
 };
@@ -47,9 +48,9 @@ const NoteViewPage = () => {
       <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
     </Head>
     <div class={styles.container}>
-      <Show when={!data.loading} fallback={"Loading data..."}>
+      <Show when={!data.loading || !data()?.noteId} fallback={"Loading data..."}>
         <Suspense fallback={"Loading editor..."}>
-          <Editor noteId={hashed} disabled={true} prerendered={prerendered()} />
+          <Editor noteId={data()!.noteId!} disabled={true} prerendered={prerendered()} />
         </Suspense>
       </Show>
     </div>
