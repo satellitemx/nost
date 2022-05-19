@@ -57,7 +57,9 @@ const Editor: Component<{
         if (content.id !== lastAcknowledgedId) {
           quill.updateContents(content.delta, "api");
         }
-      }).subscribe();
+      }).subscribe(() => {
+        toast("You're subscribed to live changes on this page. ");
+      });
     onCleanup(() => {
       subscription.unsubscribe();
     });
