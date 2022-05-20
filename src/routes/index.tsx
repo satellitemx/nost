@@ -13,7 +13,7 @@ const routes: RouteDefinition[] = [
   {
     path: "/view/:hashed",
     component: lazy(() => import("src/components/pages/view/note-view.page"))
-  }
+  },
 ];
 
 const AppRoutes = () => {

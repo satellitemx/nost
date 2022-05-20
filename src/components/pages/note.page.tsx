@@ -5,7 +5,7 @@ import { createMemo, createResource, lazy, Show, Suspense } from "solid-js";
 import Head from "src/components/head";
 import ShareStrip from "src/components/share-strip";
 import { supabase } from "src/lib/supabase";
-import styles from "src/styles/note-page.module.css";
+import styles from "src/styles/centre.module.css";
 import "src/styles/quill-snow-override.css";
 
 const Editor = lazy(() => import("src/components/editor"));

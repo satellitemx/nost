@@ -25,10 +25,9 @@ const Editor: Component<{
       .insert([
         { delta: JSON.stringify(captured), note_id: props.noteId },
       ])
-      .then(({ data }) => {
-        const row = data?.pop();
+      .single()
+      .then(({ data: row }) => {
         lastAcknowledgedId = row?.id ?? "";
-        toast("Changes saved.");
       });
   };
 
@@ -57,9 +56,7 @@ const Editor: Component<{
         if (content.id !== lastAcknowledgedId) {
           quill.updateContents(content.delta, "api");
         }
-      }).subscribe(() => {
-        toast("You're subscribed to live changes on this page. ");
-      });
+      }).subscribe();
     onCleanup(() => {
       subscription.unsubscribe();
     });
