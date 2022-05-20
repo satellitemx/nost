@@ -3,7 +3,6 @@ import Quill, { TextChangeHandler } from "quill";
 import Delta from "quill-delta";
 import { Component, createEffect, onCleanup, onMount } from "solid-js";
 import { supabase } from "src/lib/supabase";
-import { useToast } from "src/lib/use-toast";
 import styles from "src/styles/editor.module.css";
 
 const Editor: Component<{
@@ -11,9 +10,6 @@ const Editor: Component<{
   prerendered: string;
   disabled: boolean;
 }> = (props) => {
-
-  const { toast } = useToast();
-
   let delta = new Delta();
   let lastAcknowledgedId = "";
 
@@ -40,7 +36,7 @@ const Editor: Component<{
     quill = new Quill(editorRef, {
       theme: "snow",
       modules: {
-        toolbar: false,
+        toolbar: !props.disabled,
       },
     });
     if (props.disabled) {
@@ -77,7 +73,10 @@ const Editor: Component<{
   });
 
   return <>
-    <div class={styles.editor}>
+    <div classList={{
+      [styles.editor]: true,
+      [styles.disabled]: props.disabled,
+    }}>
       <div ref={editorRef} innerHTML={props.prerendered} />
     </div>
   </>;

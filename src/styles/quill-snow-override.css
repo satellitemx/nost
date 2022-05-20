@@ -1,18 +1,17 @@
 .ql-container.ql-snow {
   border: none !important;
-  border-radius: 5px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   font-family: system-ui, sans-serif;
   font-size: 1rem;
   background: #FFF;
 }
 
-.ql-container.ql-disabled {
-  box-shadow: none;
-  background: none;
-  border-radius: none;
+.ql-toolbar.ql-snow {
+  border-width: 0 0 1px 0 !important;
+  border-bottom: solid #f4f4f4 !important;
+  background: #FFF;
 }
 
 .ql-container .ql-editor {
   min-height: 300px;
 }
+

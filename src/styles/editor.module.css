@@ -1,7 +1,21 @@
-  .editor {
-    display: block;
-    max-width: 600px;
-    width: calc(100% - 2rem);
-    min-height: 300px;
-    margin: 1rem auto;
-  }
+.editor {
+  display: block;
+  max-width: 600px;
+  width: calc(100% - 2rem);
+  min-height: 300px;
+  margin: 1rem auto;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  overflow: hidden;
+}
+
+.disabled {
+  box-shadow: none;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
