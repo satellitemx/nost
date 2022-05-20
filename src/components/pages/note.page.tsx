@@ -7,33 +7,36 @@ import ShareStrip from "src/components/share-strip";
 import { supabase } from "src/lib/supabase";
 import styles from "src/styles/centre.module.css";
 import "src/styles/quill-snow-override.css";
+import { definitions } from "src/types";
 
 const Editor = lazy(() => import("src/components/editor"));
 
 const fetchNote = async (noteId: string) => {
-  let { data } = await supabase
-    .from<{
-      id: number;
-      note_id: string;
-      note_changes: Array<{
-        delta: string;
-      }>;
-    }>("note")
-    .select("*, note_changes(delta)")
-    .eq("note_id", noteId);
-  if (!data || data?.length === 0) {
-    const { data: newData } = await supabase
-      .from("note")
+  let { data: note } = await supabase
+    .from<definitions["note"]>("note")
+    .select("id")
+    .eq("note_id", noteId)
+    .maybeSingle()
+  if (!note) {
+    const { data: newNote } = await supabase
+      .from<definitions["note"]>("note")
       .insert([{
         note_id: noteId
-      }]);
-    data = newData;
+      }])
+      .single();
+    note = newNote;
   }
-  const row = data?.pop();
-  const composed = row?.note_changes?.reduce((acc, cur) => acc.compose(JSON.parse(cur.delta)), new Delta());
+  const { data: changes } = await supabase
+    .from<definitions["note_changes"]>("note_changes")
+    .select("*")
+    .eq("note_id", noteId)
+    .order("created_at", {
+      ascending: true,
+    });
+  const composed = changes?.reduce((acc, cur) => acc.compose(JSON.parse(cur.delta)), new Delta());
 
   return {
-    id: row?.id,
+    noteId: note!.id,
     delta: composed ?? new Delta()
   };
 };
@@ -59,7 +62,7 @@ const NotePage = () => {
         </Suspense>
       </Show>
     </div>
-    <ShareStrip id={data()?.id} />
+    <ShareStrip id={data()?.noteId} />
   </>;
 };
 export default NotePage;
