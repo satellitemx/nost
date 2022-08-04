@@ -27,7 +27,7 @@ const Editor: Component<{
       });
   };
 
-  const checkDifferenceAndUpdate = createDebounce(checkDifferenceAndUpdateFn, 500);
+  const checkDifferenceAndUpdate = createDebounce(checkDifferenceAndUpdateFn, 3000);
 
   let editorRef!: HTMLDivElement;
   let quill: Quill;
