@@ -1,10 +1,9 @@
 # Nost - an online notepad
 
-This notepad uses Vercel to serve the frontend and has data persisted at Supabase. 
+This notepad uses Vercel to serve the frontend and has data persisted at Supabase. Next.js 13 version has minimal UI. 
 
 ## Features
 
-- Automatic saves. 
 - Share the link so that others can see what's saved in current note. 
 
 ## Live Demo
@@ -13,14 +12,8 @@ This notepad uses Vercel to serve the frontend and has data persisted at Supabas
 
 No trash data. Thanks. 
 
-## To do
-
-- [x] Multi-user real-time edit
-
 ## Built with
 
-- [`Solid.js`](https://www.solidjs.com/)
+- [`Next.js 13`](https://nextjs.org/)
 - [`Quill`](https://quilljs.com/)
 - [`Supabase`](https://supabase.com/)
-
-And [`@solid-primitives/debounce`](https://github.com/solidjs-community/solid-primitives)
