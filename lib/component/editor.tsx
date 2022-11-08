@@ -6,10 +6,10 @@ import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { FC, useRef } from "react";
 
 const Editor: FC<{
-	id: string;
+	note_id: string;
 	content?: string;
 }> = ({
-	id,
+	note_id,
 	content = ""
 }) => {
 
@@ -26,7 +26,7 @@ const Editor: FC<{
 				await fetch("/api/save", {
 					method: "POST",
 					body: JSON.stringify({
-						id,
+						note_id,
 						content: html
 					})
 				})
@@ -35,7 +35,7 @@ const Editor: FC<{
 
 		const handleShare = async () => {
 			await handleSave()
-			const payload = await fetch(`/api/share/${id}`)
+			const payload = await fetch(`/api/share/${note_id}`)
 			const data = await payload.json()
 			const url = `${process.env.NEXT_PUBLIC_URL}/view/${data.view_id}`
 			navigator.clipboard.writeText(url)
@@ -58,6 +58,7 @@ const Editor: FC<{
 					theme: "snow"
 				})
 			}} src="https://cdn.quilljs.com/1.3.6/quill.js" />
+			<link rel="stylesheet" href="https://cdn.quilljs.com/1.3.6/quill.snow.css" />
 		</>
 	}
 

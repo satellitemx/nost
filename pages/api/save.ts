@@ -1,11 +1,11 @@
 import db from "lib/data/db";
-import { NextRequest } from "next/server";
+import { NextApiHandler } from "next";
 
-const handler = async (req: NextRequest) => {
-	const data = await req.json()
-	const saved = await db.save(data.id, data.content)
+const handler: NextApiHandler = async (req, res) => {
+	const data = req.body
+	const saved = await db.save(data.note_id, data.content)
 	
-	return new Response(JSON.stringify(saved))
+	return res.json(saved)
 }
 
 export default handler

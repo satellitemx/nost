@@ -11,7 +11,7 @@ export default async function NotePage({
 
 	return <>
 		<Editor
-			id={params.id}
+			note_id={params.id}
 			content={data?.content}
 		/>
 	</>

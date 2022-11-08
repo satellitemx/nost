@@ -36,8 +36,6 @@ const db = (() => {
 				.from("note")
 				.update({ content })
 				.eq("note_id", note_id)
-				.select("*")
-				.maybeSingle()
 			if (updated.error) {
 				const inserted = await supabase
 					.from("note")
