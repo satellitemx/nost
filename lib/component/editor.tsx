@@ -1,7 +1,7 @@
 "use client";
 
 import Script from "next/script";
-import Quill from "quill";
+import type Quill from "quill";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { FC, useRef } from "react";
 
